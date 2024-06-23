@@ -1,5 +1,5 @@
 const prefix = import.meta.env.VITE_API_PREFIX || ".execute-api2";
-const awsAPI = "https://6563hjfn25.execute-api.us-east-1.amazonaws.com/prod";
+const awsAPI = "https://dz6hsqwdf4.execute-api.us-east-1.amazonaws.com/prod";
 
 const API_PATHS = {
   product: awsAPI,
