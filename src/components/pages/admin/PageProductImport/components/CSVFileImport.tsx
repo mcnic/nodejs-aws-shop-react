@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import axios from "axios";
 
 type CSVFileImportProps = {
   url: string;
@@ -14,33 +15,39 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     const files = e.target.files;
     if (files && files.length > 0) {
       const file = files[0];
+      console.log("onFileChange", file);
       setFile(file);
     }
   };
 
   const removeFile = () => {
+    console.log("removeFile", file);
     setFile(undefined);
   };
 
   const uploadFile = async () => {
-    console.log("uploadFile to", url);
+    console.log("upload file to", url);
+    if (!file) {
+      console.error("file not exist");
+      return;
+    }
 
     // Get the presigned URL
-    // const response = await axios({
-    //   method: "GET",
-    //   url,
-    //   params: {
-    //     name: encodeURIComponent(file.name),
-    //   },
-    // });
-    // console.log("File to upload: ", file.name);
-    // console.log("Uploading to: ", response.data);
-    // const result = await fetch(response.data, {
-    //   method: "PUT",
-    //   body: file,
-    // });
-    // console.log("Result: ", result);
-    // setFile("");
+    const response = await axios({
+      method: "GET",
+      url,
+      params: {
+        name: encodeURIComponent(file.name),
+      },
+    });
+    console.log("File to upload: ", file.name);
+    console.log("Uploading to: ", response.data);
+    const result = await fetch(response.data, {
+      method: "PUT",
+      body: file,
+    });
+    console.log("Uploading result: ", result);
+    setFile(undefined);
   };
   return (
     <Box>
