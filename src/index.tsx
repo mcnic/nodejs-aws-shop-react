@@ -28,14 +28,14 @@ axios.interceptors.response.use(
     switch (error.response.status) {
       case 401:
         alert("401 Unauthorized error");
+        return Promise.reject("Unauthorized");
         break;
       case 403:
         alert("403 Forbidden error");
+        return Promise.reject("Unauthorized");
         break;
-      default:
-        alert(error);
     }
-    return error;
+    return Promise.reject(error);
   }
 );
 
