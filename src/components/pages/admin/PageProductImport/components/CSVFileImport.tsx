@@ -34,14 +34,17 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
 
     try {
       const authToken = localStorage.getItem("authorization_token");
+      const headers = authToken
+        ? {
+            Authorization: `Basic ${authToken}`,
+          }
+        : undefined;
 
       // Get the presigned URL
       const response = await axios({
         method: "GET",
         url,
-        headers: {
-          Authorization: `Basic ${authToken}`,
-        },
+        headers,
         params: {
           name: encodeURIComponent(file.name),
         },
