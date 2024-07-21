@@ -32,22 +32,38 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       return;
     }
 
-    // Get the presigned URL
-    const response = await axios({
-      method: "GET",
-      url,
-      params: {
-        name: encodeURIComponent(file.name),
-      },
-    });
-    console.log("File to upload: ", file.name);
-    console.log("Uploading to: ", response.data);
-    const result = await fetch(response.data, {
-      method: "PUT",
-      body: file,
-    });
-    console.log("Uploading result: ", result);
-    setFile(undefined);
+    try {
+      const authToken = localStorage.getItem("authorization_token");
+      const headers = authToken
+        ? {
+            Authorization: `Basic ${authToken}`,
+          }
+        : undefined;
+
+      // Get the presigned URL
+      const response = await axios({
+        method: "GET",
+        url,
+        headers,
+        params: {
+          name: encodeURIComponent(file.name),
+        },
+      });
+      console.log("File to upload: ", file.name);
+      console.log("Uploading to: ", response.data);
+      const result = await fetch(response.data, {
+        method: "PUT",
+        body: file,
+      });
+      console.log("Uploading result: ", result);
+      setFile(undefined);
+    } catch (error) {
+      if (error === "Unauthorized") {
+        console.log("Unauthorized. Please log in.");
+      } else {
+        console.error("An error occurred:", error);
+      }
+    }
   };
   return (
     <Box>
