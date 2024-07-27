@@ -5,7 +5,7 @@ const API_PATHS = {
   order: `https://${prefix}.eu-west-1.amazonaws.com/dev`,
   import: "https://i6gsu0m0sg.execute-api.us-east-1.amazonaws.com/prod",
   bff: `https://${prefix}.eu-west-1.amazonaws.com/dev`,
-  cart: `https://${prefix}.eu-west-1.amazonaws.com/dev`,
+  cart: `https://gmee5dd5ja.execute-api.us-east-1.amazonaws.com/prod/api`,
 };
 
 export default API_PATHS;
